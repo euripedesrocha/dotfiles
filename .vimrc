@@ -3,10 +3,14 @@ set exrc
 set secure
 set nocompatible
 
-set tabstop=4
+set tabstop=8
+set expandtab
 set softtabstop=4
 set shiftwidth=4
-set noexpandtab
+filetype indent on
+
+set autochdir 
+set tags+=./tags;
 set smartindent
 set backspace=2
 set foldmethod=syntax
@@ -22,26 +26,32 @@ augroup project
     autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
 augroup END
 
-filetype off
-set rtp+=~/.vim/bundle/vundle/
+
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-Plugin 'gmarik/vundle'
-Plugin 'tpope/vim-fugitive'
-Plugin 'kien/ctrlp.vim'
-Plugin 'jceb/vim-orgmode'
+Plugin 'gmarik/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'xolox/vim-easytags'
-Plugin 'fholgado/minibufexpl.vim'
 Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
-Plugin 'tpope/vim-speeddating'
 Plugin 'flazz/vim-colorschemes'
+Plugin 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+
 "Org-mode related Plugins
+Plugin 'jceb/vim-orgmode'
+Plugin 'tpope/vim-speeddating'
 Plugin 'vim-scripts/utl.vim' " plugin related to link short
 Plugin 'mattn/calendar-vim'
+
+Plugin 'tpope/vim-sensible'
+Plugin 'bling/vim-airline'
+Plugin 'bling/vim-bufferline'
 call vundle#end()
 filetype plugin indent on
 
@@ -59,19 +69,11 @@ imap <F2> <ESC>:w<CR>i
 " Toggle line numbering:w
 nmap <F3> :set invnumber<CR>
 
-" switch between header/source with F4
-map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-" create doxygen comment
-map <F6> :Dox<CR>
 " build using makeprg with <F7>
 map <F5> :!rake test:all<CR>
 " build using makeprg with <S-F7>
 map <S-F5> :!rake clean<CR>
 nmap <F8> :TagbarToggle<CR>
-
-" goto definition with F11
-map <F11> <C-]>
-
 
 let g:tagbar_type_vhdl = {
     \ 'ctagstype': 'vhdl',
