@@ -18,8 +18,8 @@ set colorcolumn=110
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
-highlight ColorColumn ctermbg=darkgray
-highlight Folded ctermbg=242
+"highlight ColorColumn ctermbg=darkgray
+"highlight Folded ctermbg=242
 
 augroup project
     autocmd!
@@ -39,9 +39,11 @@ Plugin 'xolox/vim-session'
 Plugin 'xolox/vim-easytags'
 Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
-Plugin 'flazz/vim-colorschemes'
+"Plugin 'flazz/vim-colorschemes'
+Plugin 'morhetz/gruvbox'
 Plugin 'tpope/vim-fugitive'
 Plugin 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdcommenter'
 
 "Org-mode related Plugins
 Plugin 'jceb/vim-orgmode'
@@ -51,13 +53,12 @@ Plugin 'mattn/calendar-vim'
 
 Plugin 'tpope/vim-sensible'
 Plugin 'bling/vim-airline'
-Plugin 'bling/vim-bufferline'
 call vundle#end()
 filetype plugin indent on
 
 set t_Co=256
-set background=dark
 colorscheme gruvbox
+set background=dark
 
 " Enhanced keyboard mappings
 "
@@ -68,6 +69,8 @@ imap <F2> <ESC>:w<CR>i
 
 " Toggle line numbering:w
 nmap <F3> :set invnumber<CR>
+
+nmap <F4> :CtrlPBuffer<CR>
 
 " build using makeprg with <F7>
 map <F5> :!rake test:all<CR>
@@ -100,13 +103,13 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 "let g:ycm_server_log_level = 'debug'
 
 "let g:miniBufExplMapCTabSwitchBufs = 1
-let g:miniBufExplModSelTarget = 1
-let g:miniBufExplorerMoreThanOne = 0
-let g:miniBufExplModSelTarget = 0
-let g:miniBufExplUseSingleClick = 1
-let g:miniBufExplMapWindowNavVim = 1
-let g:miniBufExplVSplit = 25
-let g:miniBufExplSplitBelow=1
+"let g:miniBufExplModSelTarget = 1
+"let g:miniBufExplorerMoreThanOne = 0
+"let g:miniBufExplModSelTarget = 0
+"let g:miniBufExplUseSingleClick = 1
+"let g:miniBufExplMapWindowNavVim = 1
+"let g:miniBufExplVSplit = 25
+"let g:miniBufExplSplitBelow=1
 
 map <leader>tn :tabnew %<cr>
 map <leader>tc :tabclose<cr>
@@ -118,6 +121,7 @@ map <F10> :tabprevious<CR>
 
 set tags=./tags;
 let g:easytags_dynamic_files = 1
+let g:easytags_async = 1
 "Vim Session Plugin configuration
 let g:session_autosave = 'yes'
 let g:session_autoload = 'no'
@@ -137,6 +141,7 @@ let g:org_todo_keyword_faces = [['TODO', [':foreground yellow',
 "   \['FIXED],
 "   \['CANCELED', [':foreground grey', ':background black', ':weight bold',
 "   \':slant italic', ':decoration underline']]]
+
 
 "statusline setup
 set statusline =%#identifier#
