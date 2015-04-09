@@ -73,7 +73,7 @@ nmap <F3> :set invnumber<CR>
 nmap <F4> :CtrlPBuffer<CR>
 
 " build using makeprg with <F7>
-map <F5> :!rake test:all<CR>
+map <F5> :!rake test:delta<CR>
 " build using makeprg with <S-F7>
 map <S-F5> :!rake clean<CR>
 nmap <F8> :TagbarToggle<CR>
