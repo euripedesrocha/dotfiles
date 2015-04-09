@@ -53,6 +53,9 @@ Plugin 'mattn/calendar-vim'
 
 Plugin 'tpope/vim-sensible'
 Plugin 'bling/vim-airline'
+Plugin 'Zuckonit/vim-airline-tomato'
+"Plugin 'Lokaltog/powerline-fonts'
+Plugin 'gabrielelana/awesome-terminal-fonts'
 call vundle#end()
 filetype plugin indent on
 
@@ -79,26 +82,28 @@ map <S-F5> :!rake clean<CR>
 nmap <F8> :TagbarToggle<CR>
 
 let g:tagbar_type_vhdl = {
-    \ 'ctagstype': 'vhdl',
-    \ 'kinds' : [
-        \'d:prototypes',
-        \'b:package bodies',
-        \'e:entities',
-        \'a:architectures',
-        \'t:types',
-        \'p:processes',
-        \'f:functions',
-        \'r:procedures',
-        \'c:constants',
-        \'T:subtypes',
-        \'r:records',
-        \'C:components',
-        \'P:packages',
-        \'l:locals'
-    \]
-	\}
+            \ 'ctagstype': 'vhdl',
+            \ 'kinds' : [
+            \'d:prototypes',
+            \'b:package bodies',
+            \'e:entities',
+            \'a:architectures',
+            \'t:types',
+            \'p:processes',
+            \'f:functions',
+            \'r:procedures',
+            \'c:constants',
+            \'T:subtypes',
+            \'r:records',
+            \'C:components',
+            \'P:packages',
+            \'l:locals'
+            \]
+            \}
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 
@@ -128,12 +133,12 @@ let g:session_autoload = 'no'
 
 "Vim org_mode Plugin configuration
 let g:org_todo_keywords= [['TODO(t)', '|', 'DONE(d)'],
-   \['TEST(v)',  'CODE(c)', 'BUG(b)', '|', 'DONE(d)', 'FIXED(f)'],
-   \['CANCELED(a)']]
+            \['TEST(v)',  'CODE(c)', 'BUG(b)', '|', 'DONE(d)', 'FIXED(f)'],
+            \['CANCELED(a)']]
 let g:org_todo_keyword_faces = [['TODO', [':foreground yellow', 
-   \':background black', ':weight bold', ':decoration underline']], 
-   \['DONE', [':foreground green', 
-   \':background black', ':weight bold', ':decoration underline']]]
+            \':background black', ':weight bold', ':decoration underline']], 
+            \['DONE', [':foreground green', 
+            \':background black', ':weight bold', ':decoration underline']]]
 "   \['TEST',],
 "   \['CODE',],
 "   \['BUG',],
@@ -141,6 +146,11 @@ let g:org_todo_keyword_faces = [['TODO', [':foreground yellow',
 "   \['FIXED],
 "   \['CANCELED', [':foreground grey', ':background black', ':weight bold',
 "   \':slant italic', ':decoration underline']]]
+
+
+"airline-pomodoro
+let g:tomato#show_clock = 1
+let g:tomato#show_count_down = 1 
 
 
 "statusline setup
