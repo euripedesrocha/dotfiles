@@ -26,8 +26,6 @@ augroup project
     autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
 augroup END
 
-
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -54,8 +52,8 @@ Plugin 'mattn/calendar-vim'
 Plugin 'tpope/vim-sensible'
 Plugin 'bling/vim-airline'
 Plugin 'Zuckonit/vim-airline-tomato'
-"Plugin 'Lokaltog/powerline-fonts'
-Plugin 'gabrielelana/awesome-terminal-fonts'
+Plugin 'Lokaltog/powerline-fonts'
+"Plugin 'gabrielelana/awesome-terminal-fonts'
 call vundle#end()
 filetype plugin indent on
 
@@ -104,6 +102,17 @@ let g:tagbar_type_vhdl = {
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_filepath_completion_use_working_dir = 1
+
+"YouCompleteMe
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <C-F5> :YcmForceCompileAndDiagnostics<CR>
+"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+"Do not ask when starting vim
+let g:ycm_confirm_extra_conf = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+set tags+=./.tags
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 
