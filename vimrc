@@ -13,7 +13,7 @@ set autochdir
 set tags+=./tags;
 set smartindent
 set backspace=2
-set foldmethod=syntax
+set foldmethod=indent
 set colorcolumn=80
 
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
@@ -51,6 +51,7 @@ Plugin 'mattn/calendar-vim'
 
 Plugin 'tpope/vim-sensible'
 
+Plugin 'bling/vim-airline'
 call vundle#end()
 filetype plugin indent on
 
