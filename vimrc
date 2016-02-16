@@ -40,14 +40,14 @@ Plugin 'majutsushi/tagbar'
 Plugin 'morhetz/gruvbox'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
-
+Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'scrooloose/nerdcommenter'
 
 "Org-mode related Plugins
-Plugin 'jceb/vim-orgmode'
-Plugin 'tpope/vim-speeddating'
-Plugin 'vim-scripts/utl.vim' " plugin related to link short
-Plugin 'mattn/calendar-vim'
+"Plugin 'jceb/vim-orgmode'
+"Plugin 'tpope/vim-speeddating'
+"Plugin 'vim-scripts/utl.vim' " plugin related to link short
+"Plugin 'mattn/calendar-vim'
 
 Plugin 'tpope/vim-sensible'
 
