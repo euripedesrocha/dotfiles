@@ -9,7 +9,7 @@ set softtabstop=4
 set shiftwidth=4
 filetype indent on
 
-set autochdir 
+set autochdir
 set tags+=./tags;
 set smartindent
 set backspace=2
@@ -21,10 +21,10 @@ autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 "highlight ColorColumn ctermbg=darkgray
 "highlight Folded ctermbg=242
 
-augroup project
-    autocmd!
-    autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
-augroup END
+"augroup project
+    "autocmd!
+    "autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+"augroup END
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -35,6 +35,7 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 Plugin 'xolox/vim-easytags'
+Plugin 'xolox/vim-shell'
 Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'morhetz/gruvbox'
@@ -155,9 +156,9 @@ let g:tagbar_type_vhdl = {
 let g:org_todo_keywords= [['TODO(t)', '|', 'DONE(d)'],
             \['TEST(v)',  'CODE(c)', 'BUG(b)', '|', 'DONE(d)', 'FIXED(f)'],
             \['CANCELED(a)']]
-let g:org_todo_keyword_faces = [['TODO', [':foreground yellow', 
-            \':background black', ':weight bold', ':decoration underline']], 
-            \['DONE', [':foreground green', 
+let g:org_todo_keyword_faces = [['TODO', [':foreground yellow',
+            \':background black', ':weight bold', ':decoration underline']],
+            \['DONE', [':foreground green',
             \':background black', ':weight bold', ':decoration underline']]]
 "   \['TEST',],
 "   \['CODE',],
