@@ -82,10 +82,10 @@ map <F5> :!rake test:delta<CR>
 " build using makeprg with <S-F7>
 map <S-F5> :!rake clean<CR>
 
+nmap <leader>s :setlocal spell! spelllang=pt<cr>
 nmap <leader>tn :tabnew %<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
-map <c-w><c-t> :WMToggle<cr>
 map <F9> :tabnext<CR>
 map <F10> :tabprevious<CR>
 
@@ -95,6 +95,8 @@ map <F8> :TagbarToggle<CR>
 
 nnoremap <leader>el :Voom latex<CR>
 nnoremap <leader>ec :VoomToggle<CR>
+
+map <Leader>l :call LongLineHighlightToggle()<CR>
 
 "YouCompleteMe
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -194,3 +196,21 @@ let g:org_todo_keyword_faces = [['TODO', [':foreground yellow',
 
 let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
 
+" Highlight long lines (>80)
+"let &colorcolumn=join(range(81,999),",")
+"highlight ColorColumn ctermbg=235 guibg=#2c2d27
+
+"autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929 
+"autocmd BufEnter * match OverLength /\%81v.*/
+"autocmd BufEnter * let w:long_line_match = 1
+
+"fu! LongLineHighlightToggle()
+"  highlight OverLength ctermbg=darkgrey guibg=#592929 
+"  if exists('w:long_line_match') 
+"    match OverLength //
+"    unlet w:long_line_match
+"  else 
+"    match OverLength /\%81v.*/
+"    let w:long_line_match = 1
+"  endif
+"endfunction
