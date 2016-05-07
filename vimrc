@@ -16,6 +16,10 @@ set backspace=2
 set foldmethod=indent
 set colorcolumn=80
 
+set guioptions=-=m
+set guioptions=-=T
+set guioptions=-=r
+set guioptions=-=L
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 
 "highlight ColorColumn ctermbg=darkgray
@@ -43,6 +47,8 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'mfukar/robotframework-vim'
+Plugin 'vim-voom/VOoM'
 
 "Org-mode related Plugins
 "Plugin 'jceb/vim-orgmode'
@@ -59,9 +65,9 @@ filetype plugin indent on
 set t_Co=256
 colorscheme gruvbox
 set background=dark
-
 " Enhanced keyboard mappings
 "
+nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 " in normal mode F2 will save the file
 nmap <F2> :w<CR>
 " in insert mode F2 will exit insert, save, enters insert again
@@ -76,7 +82,38 @@ nmap <F4> :CtrlPBuffer<CR>
 map <F5> :!rake test:delta<CR>
 " build using makeprg with <S-F7>
 map <S-F5> :!rake clean<CR>
-nmap <F8> :TagbarToggle<CR>
+
+nmap <leader>s :setlocal spell! spelllang=pt<cr>
+nmap <leader>tn :tabnew %<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+map <F9> :tabnext<CR>
+map <F10> :tabprevious<CR>
+
+map <silent> <F11>
+\    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
+map <F8> :TagbarToggle<CR>
+
+nnoremap <leader>el :Voom latex<CR>
+nnoremap <leader>ec :VoomToggle<CR>
+
+map <Leader>l :call LongLineHighlightToggle()<CR>
+
+"YouCompleteMe
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <C-F5> :YcmForceCompileAndDiagnostics<CR>
+
+func! MyCtrlPMappings()
+    nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
+endfunc
+
+func! s:DeleteBuffer()
+    let line = getline('.')
+    let bufid = line =~ '\[\d\+\*No Name\]$' ? str2nr(matchstr(line, '\d\+'))
+        \ : fnamemodify(line[2:], ':p')
+    exec "bd" bufid
+    exec "norm \<F5>"
+endfunc
 
 let g:tagbar_type_vhdl = {
             \ 'ctagstype': 'vhdl',
@@ -103,9 +140,6 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_filepath_completion_use_working_dir = 1
 
-"YouCompleteMe
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <C-F5> :YcmForceCompileAndDiagnostics<CR>
 "let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "Do not ask when starting vim
 let g:ycm_confirm_extra_conf = 0
@@ -117,13 +151,6 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
-
-map <leader>tn :tabnew %<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <c-w><c-t> :WMToggle<cr>
-map <F9> :tabnext<CR>
-map <F10> :tabprevious<CR>
 
 "set tags=./tags;
 let g:easytags_dynamic_files = 1
@@ -170,14 +197,21 @@ let g:org_todo_keyword_faces = [['TODO', [':foreground yellow',
 
 let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
 
-func! MyCtrlPMappings()
-    nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
-endfunc
+" Highlight long lines (>80)
+"let &colorcolumn=join(range(81,999),",")
+"highlight ColorColumn ctermbg=235 guibg=#2c2d27
 
-func! s:DeleteBuffer()
-    let line = getline('.')
-    let bufid = line =~ '\[\d\+\*No Name\]$' ? str2nr(matchstr(line, '\d\+'))
-        \ : fnamemodify(line[2:], ':p')
-    exec "bd" bufid
-    exec "norm \<F5>"
-endfunc
+"autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929 
+"autocmd BufEnter * match OverLength /\%81v.*/
+"autocmd BufEnter * let w:long_line_match = 1
+
+"fu! LongLineHighlightToggle()
+"  highlight OverLength ctermbg=darkgrey guibg=#592929 
+"  if exists('w:long_line_match') 
+"    match OverLength //
+"    unlet w:long_line_match
+"  else 
+"    match OverLength /\%81v.*/
+"    let w:long_line_match = 1
+"  endif
+"endfunction
