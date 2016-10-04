@@ -5,13 +5,15 @@ set nocompatible
 
 set tabstop=8
 set expandtab
-set softtabstop=4
-set shiftwidth=4
-filetype indent on
+autocmd FileType * set softtabstop=4|set shiftwidth=4
+autocmd FileType ada set softtabstop=3|set shiftwidth=3
+au BufEnter *.ad* set ai sw=3 sts=3 
+set softtabstop=3
+set shiftwidth=3
+filetype plugin indent on
 
 set autochdir
 set tags+=./tags;
-set smartindent
 set backspace=2
 set foldmethod=indent
 set colorcolumn=80
@@ -135,7 +137,7 @@ let g:tagbar_type_vhdl = {
             \]
             \}
 
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf = "./.ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_filepath_completion_use_working_dir = 1
