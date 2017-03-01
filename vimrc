@@ -7,7 +7,7 @@ set tabstop=8
 set expandtab
 autocmd FileType * set softtabstop=4|set shiftwidth=4
 autocmd FileType ada set softtabstop=3|set shiftwidth=3
-au BufEnter *.ad* set ai sw=3 sts=3 
+au BufEnter *.ad* set ai sw=3 sts=3
 set softtabstop=3
 set shiftwidth=3
 filetype plugin indent on
@@ -47,33 +47,30 @@ Plugin 'majutsushi/tagbar'
 Plugin 'morhetz/gruvbox'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'rust-lang/rust.vim'
+Plugin 'fatih/vim-go'
 Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'mfukar/robotframework-vim'
+Plugin 'blindFS/vim-taskwarrior'
 Plugin 'vim-voom/VOoM'
-
-"Org-mode related Plugins
-"Plugin 'jceb/vim-orgmode'
-"Plugin 'tpope/vim-speeddating'
-"Plugin 'vim-scripts/utl.vim' " plugin related to link short
-"Plugin 'mattn/calendar-vim'
-
 Plugin 'tpope/vim-sensible'
-
 Plugin 'bling/vim-airline'
+
 call vundle#end()
 filetype plugin indent on
 
 set t_Co=256
 colorscheme gruvbox
 set background=dark
+
 " Enhanced keyboard mappings
 "
 nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 " in normal mode F2 will save the file
-nmap <F2> :w<CR>
+nmap <F2> :w<CR>:UpdateTags<CR>
 " in insert mode F2 will exit insert, save, enters insert again
-imap <F2> <ESC>:w<CR>i
+imap <F2> <ESC>:w<CR>:UpdateTags<CR>i
 
 " Toggle line numbering:w
 nmap <F3> :set invnumber<CR>
@@ -114,35 +111,15 @@ func! s:DeleteBuffer()
     let bufid = line =~ '\[\d\+\*No Name\]$' ? str2nr(matchstr(line, '\d\+'))
         \ : fnamemodify(line[2:], ':p')
     exec "bd" bufid
-    exec "norm \<F5>"
+    exec "norm \<F4>"
 endfunc
 
-let g:tagbar_type_vhdl = {
-            \ 'ctagstype': 'vhdl',
-            \ 'kinds' : [
-            \'d:prototypes',
-            \'b:package bodies',
-            \'e:entities',
-            \'a:architectures',
-            \'t:types',
-            \'p:processes',
-            \'f:functions',
-            \'r:procedures',
-            \'c:constants',
-            \'T:subtypes',
-            \'r:records',
-            \'C:components',
-            \'P:packages',
-            \'l:locals'
-            \]
-            \}
-
-let g:ycm_global_ycm_extra_conf = "./.ycm_extra_conf.py"
+"let g:ycm_global_ycm_extra_conf = "./.ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_filepath_completion_use_working_dir = 1
+"let g:ycm_show_diagnostics_ui = 0
 
-"let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 "Do not ask when starting vim
 let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
@@ -150,7 +127,6 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 set tags+=./.tags
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-let g:ycm_autoclose_preview_window_after_completion = 1
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 
@@ -181,39 +157,5 @@ let g:tagbar_type_vhdl = {
             \'l:locals'
             \]
             \}
-"Vim org_mode Plugin configuration
-let g:org_todo_keywords= [['TODO(t)', '|', 'DONE(d)'],
-            \['TEST(v)',  'CODE(c)', 'BUG(b)', '|', 'DONE(d)', 'FIXED(f)'],
-            \['CANCELED(a)']]
-let g:org_todo_keyword_faces = [['TODO', [':foreground yellow',
-            \':background black', ':weight bold', ':decoration underline']],
-            \['DONE', [':foreground green',
-            \':background black', ':weight bold', ':decoration underline']]]
-"   \['TEST',],
-"   \['CODE',],
-"   \['BUG',],
-"   \['DONE',],
-"   \['FIXED],
-"   \['CANCELED', [':foreground grey', ':background black', ':weight bold',
-"   \':slant italic', ':decoration underline']]]
 
 let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
-
-" Highlight long lines (>80)
-"let &colorcolumn=join(range(81,999),",")
-"highlight ColorColumn ctermbg=235 guibg=#2c2d27
-
-"autocmd BufEnter * highlight OverLength ctermbg=darkgrey guibg=#592929 
-"autocmd BufEnter * match OverLength /\%81v.*/
-"autocmd BufEnter * let w:long_line_match = 1
-
-"fu! LongLineHighlightToggle()
-"  highlight OverLength ctermbg=darkgrey guibg=#592929 
-"  if exists('w:long_line_match') 
-"    match OverLength //
-"    unlet w:long_line_match
-"  else 
-"    match OverLength /\%81v.*/
-"    let w:long_line_match = 1
-"  endif
-"endfunction
