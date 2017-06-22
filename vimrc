@@ -56,6 +56,7 @@ Plugin 'blindFS/vim-taskwarrior'
 Plugin 'vim-voom/VOoM'
 Plugin 'tpope/vim-sensible'
 Plugin 'bling/vim-airline'
+Plugin 'drmikehenry/vim-fontsize'
 
 call vundle#end()
 filetype plugin indent on
@@ -68,9 +69,9 @@ set background=dark
 "
 nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 " in normal mode F2 will save the file
-nmap <F2> :w<CR>:UpdateTags<CR>
+nmap <F2> :w<CR>
 " in insert mode F2 will exit insert, save, enters insert again
-imap <F2> <ESC>:w<CR>:UpdateTags<CR>i
+imap <F2> <ESC>:w<CR>i
 
 " Toggle line numbering:w
 nmap <F3> :set invnumber<CR>
@@ -83,11 +84,7 @@ map <F5> :!rake test:delta<CR>
 map <S-F5> :!rake clean<CR>
 
 nmap <leader>s :setlocal spell! spelllang=pt<cr>
-nmap <leader>tn :tabnew %<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <F9> :tabnext<CR>
-map <F10> :tabprevious<CR>
+map <F9> :TW<CR>
 
 map <silent> <F11>
 \    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
@@ -95,8 +92,6 @@ map <F8> :TagbarToggle<CR>
 
 nnoremap <leader>el :Voom latex<CR>
 nnoremap <leader>ec :VoomToggle<CR>
-
-map <Leader>l :call LongLineHighlightToggle()<CR>
 
 "YouCompleteMe
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -113,6 +108,7 @@ func! s:DeleteBuffer()
     exec "bd" bufid
     exec "norm \<F4>"
 endfunc
+let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
 
 "let g:ycm_global_ycm_extra_conf = "./.ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_completion = 1
@@ -158,4 +154,3 @@ let g:tagbar_type_vhdl = {
             \]
             \}
 
-let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
