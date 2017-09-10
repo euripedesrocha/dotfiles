@@ -3,13 +3,12 @@ set exrc
 set secure
 set nocompatible
 
-set tabstop=8
+set tabstop=2
 set expandtab
-autocmd FileType * set softtabstop=4|set shiftwidth=4
 autocmd FileType ada set softtabstop=3|set shiftwidth=3
 au BufEnter *.ad* set ai sw=3 sts=3
-set softtabstop=3
-set shiftwidth=3
+set softtabstop=2
+set shiftwidth=2
 filetype plugin indent on
 
 set autochdir
@@ -23,14 +22,10 @@ set guioptions=-=T
 set guioptions=-=r
 set guioptions=-=L
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+autocmd FileType c,cpp ClangFormatAutoToggle
 
 "highlight ColorColumn ctermbg=darkgray
 "highlight Folded ctermbg=242
-
-"augroup project
-    "autocmd!
-    "autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
-"augroup END
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -57,6 +52,8 @@ Plugin 'vim-voom/VOoM'
 Plugin 'tpope/vim-sensible'
 Plugin 'bling/vim-airline'
 Plugin 'drmikehenry/vim-fontsize'
+Plugin 'kana/vim-operator-user'
+Plugin 'rhysd/vim-clang-format'
 
 call vundle#end()
 filetype plugin indent on
@@ -126,6 +123,8 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 
+let g:clang_format#code_style = "llvm"
+let g:clang_format#auto_format = 1
 "set tags=./tags;
 let g:easytags_dynamic_files = 1
 let g:easytags_async = 1
