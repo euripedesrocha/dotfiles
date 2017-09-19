@@ -5,8 +5,6 @@ set nocompatible
 
 set tabstop=2
 set expandtab
-autocmd FileType ada set softtabstop=3|set shiftwidth=3
-au BufEnter *.ad* set ai sw=3 sts=3
 set softtabstop=2
 set shiftwidth=2
 filetype plugin indent on
@@ -21,11 +19,20 @@ set guioptions=-=m
 set guioptions=-=T
 set guioptions=-=r
 set guioptions=-=L
+
+autocmd FileType * set softtabstop=2|set shiftwidth=2
+autocmd FileType ada set softtabstop=3|set shiftwidth=3
+au BufEnter *.ad* set ai sw=3 sts=3
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-autocmd FileType c,cpp ClangFormatAutoToggle
+autocmd FileType c,cpp ClangFormatAutoEnable
 
 "highlight ColorColumn ctermbg=darkgray
 "highlight Folded ctermbg=242
+
+"augroup project
+    "autocmd!
+    "autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+"augroup END
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -105,7 +112,8 @@ func! s:DeleteBuffer()
     exec "norm \<F4>"
 endfunc
 let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
-
+let g:clang_format#auto_format = 1
+let g:clang_format#style = "llvm"
 "let g:ycm_global_ycm_extra_conf = "./.ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
@@ -115,6 +123,7 @@ let g:ycm_filepath_completion_use_working_dir = 1
 "Do not ask when starting vim
 let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
 let g:ycm_collect_identifiers_from_tags_files = 1
 set tags+=./.tags
 
@@ -122,8 +131,7 @@ set tags+=./.tags
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 
-let g:clang_format#code_style = "llvm"
-let g:clang_format#auto_format = 1
+
 "Vim Session Plugin configuration
 let g:session_autosave = 'yes'
 let g:session_autoload = 'no'
