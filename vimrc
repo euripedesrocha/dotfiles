@@ -35,7 +35,6 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
-Plugin 'xolox/vim-easytags'
 Plugin 'xolox/vim-shell'
 Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
@@ -95,7 +94,7 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <C-F5> :YcmForceCompileAndDiagnostics<CR>
 
 func! MyCtrlPMappings()
-    nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
+    nnoremap <buffer> <silent> <c-b> :call <sid>DeleteBuffer()<cr>
 endfunc
 
 func! s:DeleteBuffer()
@@ -119,15 +118,12 @@ let g:syntastic_always_populate_loc_list = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
 set tags+=./.tags
 
-let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+"let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 "let g:ycm_server_use_vim_stdout = 1
 "let g:ycm_server_log_level = 'debug'
 
 let g:clang_format#code_style = "llvm"
 let g:clang_format#auto_format = 1
-"set tags=./tags;
-let g:easytags_dynamic_files = 1
-let g:easytags_async = 1
 "Vim Session Plugin configuration
 let g:session_autosave = 'yes'
 let g:session_autoload = 'no'
