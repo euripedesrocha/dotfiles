@@ -98,10 +98,11 @@ nnoremap <leader>ec :VoomToggle<CR>
 
 "YouCompleteMe
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>f :YcmCompleter FixIt<CR>
 nnoremap <C-F5> :YcmForceCompileAndDiagnostics<CR>
 
 func! MyCtrlPMappings()
-    nnoremap <buffer> <silent> <c-b> :call <sid>DeleteBuffer()<cr>
+    nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
 endfunc
 
 func! s:DeleteBuffer()
