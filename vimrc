@@ -117,4 +117,5 @@ let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "./build" ]
 noremap <Space> <Nop>
 let mapleader=" "
 nnoremap <leader>f :YcmCompleter FixIt<CR>
-nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>g :Git<CR>
+nnoremap <leader>gp :GPush<CR>
