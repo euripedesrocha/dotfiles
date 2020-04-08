@@ -46,20 +46,28 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'vim-voom/VOoM'
-Plugin 'bling/vim-airline'
+Plugin 'itchyny/lightline.vim'
+Plugin 'joshdick/onedark.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'gitignore'
 call vundle#end()
-Bundle 'sonph/onehalf', {'rtp': 'vim/'}
+"Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 
 filetype plugin indent on
 
 set t_Co=256
-colorscheme onehalfdark
-let g:airline_theme='onehalfdark'
+colorscheme onedark
+let g:lightline = {
+  \ 'colorscheme': 'onedark',
+  \ }
+set laststatus=2
+set noshowmode
+
+"let g:airline_theme='onehalfdark'
 
 nmap <F2> :w<CR>
+
 imap <F2> <ESC>:w<CR>i
 nmap <F3> :set invnumber<CR>
 nmap <F4> :CtrlPBuffer<CR>
