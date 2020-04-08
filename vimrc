@@ -7,7 +7,6 @@ set tabstop=2
 set expandtab
 set softtabstop=2
 set shiftwidth=2
-filetype plugin indent on
 
 set autochdir
 set tags+=./tags;
@@ -42,6 +41,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-endwise'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
@@ -49,9 +49,11 @@ Plugin 'vim-voom/VOoM'
 Plugin 'bling/vim-airline'
 Plugin 'majutsushi/tagbar'
 Plugin 'rhysd/vim-clang-format'
+Plugin 'gitignore'
 call vundle#end()
-filetype plugin indent on
 Bundle 'sonph/onehalf', {'rtp': 'vim/'}
+
+filetype plugin indent on
 
 set t_Co=256
 colorscheme onehalfdark
@@ -81,7 +83,19 @@ func! MyCtrlPMappings()
   nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
 endfunc
 
-set wildignore+=*/.git/*,*/build
+
+let g:ctrlp_use_caching = 0
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+else
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+  let g:ctrlp_prompt_mappings = {
+        \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+        \ }
+endif
+
+"set wildignore+=*/.git/*,*/build
 let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
 let g:clang_format#auto_format = 1
 let g:clang_format#style = "llvm"
@@ -103,3 +117,4 @@ let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "./build" ]
 noremap <Space> <Nop>
 let mapleader=" "
 nnoremap <leader>f :YcmCompleter FixIt<CR>
+nnoremap <leader>gs :Gstatus<CR>
