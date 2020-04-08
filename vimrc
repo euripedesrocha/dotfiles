@@ -29,9 +29,9 @@ autocmd FileType c,cpp ClangFormatAutoEnable
 "highlight ColorColumn ctermbg=darkgray
 "highlight Folded ctermbg=242
 
-"augroup project
-    "autocmd!
-    "autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
+augroup project
+"autocmd!
+"autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
 "augroup END
 
 " set the runtime path to include Vundle and initialize
@@ -40,121 +40,66 @@ call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
-Plugin 'xolox/vim-shell'
 Plugin 'scrooloose/syntastic'
-Plugin 'majutsushi/tagbar'
-Plugin 'morhetz/gruvbox'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'wakatime/vim-wakatime'
 Plugin 'rust-lang/rust.vim'
-Plugin 'fatih/vim-go'
-Plugin 'jmcantrell/vim-virtualenv'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'blindFS/vim-taskwarrior'
 Plugin 'vim-voom/VOoM'
-Plugin 'tpope/vim-sensible'
 Plugin 'bling/vim-airline'
-Plugin 'drmikehenry/vim-fontsize'
-Plugin 'kana/vim-operator-user'
+Plugin 'majutsushi/tagbar'
 Plugin 'rhysd/vim-clang-format'
-
 call vundle#end()
 filetype plugin indent on
+Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 
 set t_Co=256
-colorscheme gruvbox
-set background=dark
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
 
-" Enhanced keyboard mappings
-"
-nnoremap <C-F1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
-" in normal mode F2 will save the file
 nmap <F2> :w<CR>
-" in insert mode F2 will exit insert, save, enters insert again
 imap <F2> <ESC>:w<CR>i
-
-" Toggle line numbering:w
 nmap <F3> :set invnumber<CR>
-
 nmap <F4> :CtrlPBuffer<CR>
-
-" build using makeprg with <F7>
-map <F5> :!rake test:delta<CR>
-" build using makeprg with <S-F7>
-map <S-F5> :!rake clean<CR>
-
-nmap <leader>s :setlocal spell! spelllang=pt<cr>
-map <F9> :TW<CR>
-
-map <silent> <F11>
-\    :call system("wmctrl -ir " . v:windowid . " -b toggle,fullscreen")<CR>
 map <F8> :TagbarToggle<CR>
 
-nnoremap <leader>el :Voom latex<CR>
-nnoremap <leader>ec :VoomToggle<CR>
+"map <F9> :TW<CR>
 
-"YouCompleteMe
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>f :YcmCompleter FixIt<CR>
-nnoremap <C-F5> :YcmForceCompileAndDiagnostics<CR>
-
-func! MyCtrlPMappings()
-    nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
-endfunc
+"map <silent> <F11>
+      "\    :call system("wmctrl -ir " . v:windowid . " -b
+"toggle,fullscreen")<CR>
 
 func! s:DeleteBuffer()
-    let line = getline('.')
-    let bufid = line =~ '\[\d\+\*No Name\]$' ? str2nr(matchstr(line, '\d\+'))
+  let line = getline('.')
+  let bufid = line =~ '\[\d\+\*No Name\]$' ?
+  str2nr(matchstr(line, '\d\+'))
         \ : fnamemodify(line[2:], ':p')
-    exec "bd" bufid
-    exec "norm \<F4>"
+  exec "bd" bufid
+  exec "norm \<F4>"
 endfunc
+func! MyCtrlPMappings()
+  nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
+endfunc
+
+set wildignore+=*/.git/*,*/build
 let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
 let g:clang_format#auto_format = 1
 let g:clang_format#style = "llvm"
-"let g:ycm_global_ycm_extra_conf = "./.ycm_extra_conf.py"
+let g:ycm_global_ycm_extra_conf = "~/.vim/ycm_extra_conf.py"
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_filepath_completion_use_working_dir = 1
-"let g:ycm_show_diagnostics_ui = 0
+let g:ycm_show_diagnostics_ui = 0
 
-"Do not ask when starting vim
-let g:ycm_confirm_extra_conf = 0
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_go_checkers = ['golint', 'govet', 'errcheck']
-let g:ycm_collect_identifiers_from_tags_files = 1
-set tags+=./.tags
+let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "./build" ]
+"let g:ycm_confirm_extra_conf = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:ycm_collect_identifiers_from_tags_files = 1
+"set tags+=./.tags
 
-"let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-"let g:ycm_server_use_vim_stdout = 1
-"let g:ycm_server_log_level = 'debug'
+"let g:session_autosave = 'yes'
+"let g:session_autoload = 'no'
 
-
-"Vim Session Plugin configuration
-let g:session_autosave = 'yes'
-let g:session_autoload = 'no'
-
-let g:tagbar_type_vhdl = {
-            \ 'ctagstype': 'vhdl',
-            \ 'kinds' : [
-            \'d:prototypes',
-            \'b:package bodies',
-            \'e:entities',
-            \'a:architectures',
-            \'t:types',
-            \'p:processes',
-            \'f:functions',
-            \'r:procedures',
-            \'c:constants',
-            \'T:subtypes',
-            \'r:records',
-            \'s:signals',
-            \'C:components',
-            \'P:packages',
-            \'l:locals'
-            \]
-            \}
-
+noremap <Space> <Nop>
+let mapleader=" "
+nnoremap <leader>f :YcmCompleter FixIt<CR>
