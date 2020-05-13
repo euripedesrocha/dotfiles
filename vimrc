@@ -99,4 +99,5 @@ let g:ale_lint_on_insert_leave = 0
 let g:ale_linters_explicit = 1
 let g:ale_linters = {
       \  'systemverilog' : ['verilator'], 
+      \  'verilog' : ['verilator'], 
       \}
