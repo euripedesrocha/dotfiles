@@ -45,6 +45,7 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'xarthurx/taskwarrior.vim'
 Plugin 'vim-voom/VOoM'
 Plugin 'itchyny/lightline.vim'
 Plugin 'majutsushi/tagbar'
@@ -100,4 +101,5 @@ let g:ale_linters_explicit = 1
 let g:ale_linters = {
       \  'systemverilog' : ['verilator'], 
       \  'verilog' : ['verilator'], 
+      \  'vhdl' : ['ghdl'], 
       \}

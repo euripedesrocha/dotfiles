@@ -98,7 +98,10 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
+alias backlog="task +backlog"
+alias in="task add +backlog"
+alias doing="task active"
+alias todo="task +todo"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -109,4 +112,21 @@ LS_COLORS="ow=01;36;40" && export LS_COLORS
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 autoload -Uz compinit
 compinit
-export PATH="$PATH:/opt/cmake/bin:/home/euripedes/.local/bin"
+export PATH="$PATH:/opt/cmake/bin:/home/euripedes/.local/bin:/opt/ghdl/bin"
+#alias tmux="TERM=screen-256color-bce tmux"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/euripedes/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/euripedes/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/euripedes/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/euripedes/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+conda deactivate
