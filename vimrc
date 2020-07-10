@@ -12,6 +12,8 @@ set shiftwidth=2
 set tags+=./tags;
 set backspace=2
 set foldmethod=indent
+set incsearch
+set hlsearch
 "set colorcolumn=80
 
 set guioptions=-=m
@@ -80,10 +82,13 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 noremap <Space> <Nop>
 let mapleader=" "
 nnoremap <leader>f :YcmCompleter FixIt<CR>
+nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>s :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>n :cn<CR>
 nnoremap <leader>p :cp<CR>
 nnoremap <leader>g :Git<CR>
 nnoremap <leader>gp :Gpush<cR>
+nnoremap <leader><leader> :noh<cR>
 
 let g:ctrlp_custom_ignore = 'build\|git'
 
@@ -92,8 +97,7 @@ let g:clang_format#style = "llvm"
 
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_filepath_completion_use_working_dir = 1
-let g:ycm_clangd_args = ["-compile-commands-dir=" . getcwd() . "/build" ]
+let g:ycm_clangd_uses_ycmd_caching=0
 
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_insert_leave = 0
