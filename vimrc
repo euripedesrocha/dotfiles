@@ -7,14 +7,14 @@ set tabstop=2
 set expandtab
 set softtabstop=2
 set shiftwidth=2
+filetype plugin indent on
 
-"set autochdir
 set tags+=./tags;
 set backspace=2
 set foldmethod=indent
 set incsearch
 set hlsearch
-"set colorcolumn=80
+set colorcolumn=120
 
 set guioptions=-=m
 set guioptions=-=T
@@ -26,15 +26,7 @@ autocmd FileType ada set softtabstop=3|set shiftwidth=3
 au BufEnter *.ad* set ai sw=3 sts=3
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
 autocmd BufNewFile,BufReadPost *.core set filetype=yaml
-autocmd FileType c,cpp ClangFormatAutoEnable
-
-"highlight ColorColumn ctermbg=darkgray
-"highlight Folded ctermbg=242
-
-augroup project
-"autocmd!
-"autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
-"augroup END
+autocmd BufNewFile,BufReadPost *.rdl set filetype=systemrdl
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -45,21 +37,20 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'dense-analysis/ale'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'rust-lang/rust.vim'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'xarthurx/taskwarrior.vim'
-Plugin 'vim-voom/VOoM'
-Plugin 'itchyny/lightline.vim'
-Plugin 'majutsushi/tagbar'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'joshdick/onedark.vim'
-Plugin 'tomasr/molokai'
+Plugin 'vim-voom/VOoM'
+Plugin 'majutsushi/tagbar'
 Plugin 'morhetz/gruvbox'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'rust-lang/rust.vim'
+Plugin 'xarthurx/taskwarrior.vim'
+Plugin 'itchyny/lightline.vim'
+Plugin 'joshdick/onedark.vim'
 Plugin 'gitignore'
 call vundle#end()
 Bundle 'sonph/onehalf', {'rtp': 'vim/'}
 
-filetype plugin indent on
 
 set t_Co=256
 colorscheme onehalfdark
@@ -71,7 +62,6 @@ set laststatus=2
 set noshowmode
 
 nmap <F2> :w<CR>
-
 imap <F2> <ESC>:w<CR>i
 nmap <F3> :set invnumber<CR>
 nmap <F4> :CtrlPBuffer<CR>
@@ -81,6 +71,13 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 noremap <Space> <Nop>
 let mapleader=" "
+nmap <leader>s :setlocal spell! spelllang=pt<cr>
+"Voom
+nnoremap <leader>el :Voom latex<CR>
+nnoremap <leader>ec :VoomToggle<CR>
+
+"YouCompleteMe
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>f :YcmCompleter FixIt<CR>
 nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>s :YcmCompleter GoToDefinition<CR>
@@ -107,3 +104,24 @@ let g:ale_linters = {
       \  'verilog' : ['verilator'], 
       \  'vhdl' : ['ghdl'], 
       \}
+let g:tagbar_type_vhdl = {
+            \ 'ctagstype': 'vhdl',
+            \ 'kinds' : [
+            \'d:prototypes',
+            \'b:package bodies',
+            \'e:entities',
+            \'a:architectures',
+            \'t:types',
+            \'p:processes',
+            \'f:functions',
+            \'r:procedures',
+            \'c:constants',
+            \'T:subtypes',
+            \'r:records',
+            \'s:signals',
+            \'C:components',
+            \'P:packages',
+            \'l:locals'
+            \]
+            \}
+
