@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/euripedes/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 DEFAULT_USER=`whoami`
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -70,7 +70,12 @@ powerline-daemon -q
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
+plugins=(git
+         alias-finder 
+         cargo 
+         colorize 
+         command-not-found
+         direnv
   fancy-ctrl-z
   history-substring-search
   zsh-autosuggestions
