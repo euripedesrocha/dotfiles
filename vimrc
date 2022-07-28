@@ -42,23 +42,23 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'gmarik/Vundle.vim'
-"Plugin 'Valloric/YouCompleteMe'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'jackguo380/vim-lsp-cxx-highlight'
-Plugin 'dense-analysis/ale'
 Plugin 'tpope/vim-fugitive'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'rhysd/vim-grammarous'
+Plugin 'vimwiki/vimwiki'
+Plugin 'michal-h21/vimwiki-sync.git'
+Plugin 'tools-life/taskwiki'
 Plugin 'vim-voom/VOoM'
-Plugin 'majutsushi/tagbar'
 Plugin 'morhetz/gruvbox'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'rust-lang/rust.vim'
 Plugin 'xarthurx/taskwarrior.vim'
 Plugin 'itchyny/lightline.vim'
 Plugin 'gitignore'
+Plugin 'lepture/vim-jinja'
 Plugin 'dracula/vim', { 'name': 'dracula' }
 "Plugin 'octol/vim-cpp-enhanced-highlight'
 call vundle#end()
@@ -88,34 +88,17 @@ nmap <leader>s :setlocal spell! spelllang=pt<cr>
 nnoremap <leader>el :Voom latex<CR>
 nnoremap <leader>ec :VoomToggle<CR>
 
-"YouCompleteMe
-"nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"nnoremap <leader>f :CocFix<CR>
-"nnoremap <leader>d :YcmCompleter GoToDeclaration<CR>
-"nnoremap <leader>s :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>n :cn<CR>
 nnoremap <leader>p :cp<CR>
 nnoremap <leader>g :Git<CR>
-nnoremap <leader>gp :Gpush<cR>
+nnoremap <leader>gp :Git push<cR>
 nnoremap <leader><leader> :noh<cR>
 
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
 let g:ctrlp_custom_ignore = 'build\|git'
 
 let g:clang_format#style = "llvm"
 
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_clangd_uses_ycmd_caching=0
-
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 0
-let g:ale_linters_explicit = 1
-let g:ale_linters = {
-      \  'systemverilog' : ['verilator'], 
-      \  'verilog' : ['verilator'], 
-      \  'vhdl' : ['ghdl'], 
-      \  'markdown' : ['proselint', 'proselint'], 
-      \}
 let g:tagbar_type_vhdl = {
             \ 'ctagstype': 'vhdl',
             \ 'kinds' : [
@@ -250,31 +233,30 @@ endif
 "
 " " Mappings for CoCList
 " " Show all diagnostics.
- nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+ nnoremap <silent><nowait> <leader>d  :<C-u>CocList diagnostics<cr>
 " " Manage extensions.
- nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+ nnoremap <silent><nowait> <leader>e  :<C-u>CocList extensions<cr>
 " " Show commands.
- nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+ nnoremap <silent><nowait> <leader>c  :<C-u>CocList commands<cr>
 " " Find symbol of current document.
- nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+ nnoremap <silent><nowait> <leader>o  :<C-u>CocList outline<cr>
 " " Search workspace symbols.
- nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+ nnoremap <silent><nowait> <leader>s  :<C-u>CocList -I symbols<cr>
 " " Do default action for next item.
- nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+ nnoremap <silent><nowait> <leader>j  :<C-u>CocNext<CR>
 " " Do default action for previous item.
- nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+ nnoremap <silent><nowait> <leader>k  :<C-u>CocPrev<CR>
 " " Resume latest coc list.
 
-nnoremap <silent><nowait> <space>p :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <leader>p :<C-u>CocListResume<CR>
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-let g:grammarous#enabled_rules = {'*' : ['PASSIVE_VOICE']}
-
-let g:grammarous#default_comments_only_filetypes = {
-            \ '*' : 1, 'help' : 0, 'cpp' : 0,
-            \ }
-
-let g:grammarous#use_vim_spelllang = 1
+let g:termdebug_wide=1
+"au User TermdebugStartPre  echomsg 'debugging starting'
+"au User TermdebugStartPost echomsg 'debugging started'
+"au User TermdebugStopPre   echomsg 'debugging stopping'
+"au User TermdebugStopPost  echomsg 'debugging stopped'
+"let g:termdebugger = ['rr', 'replay', '--'] // for custom gdb
 
