@@ -72,7 +72,7 @@ powerline-daemon -q
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git
          alias-finder 
-         cargo 
+         rust 
          colorize 
          command-not-found
          direnv
@@ -109,6 +109,7 @@ alias backlog="task +backlog"
 alias in="task add +backlog"
 alias doing="task active"
 alias todo="task +todo"
+alias gc-="git checkout -"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
@@ -122,15 +123,19 @@ compinit
 export PATH="$PATH:/opt/cmake/bin:/home/euripedes/.local/bin:/opt/ghdl/bin"
 #alias tmux="TERM=screen-256color-bce tmux"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/euripedes/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/euripedes/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/euripedes/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/euripedes/miniconda3/bin:$PATH"
-    fi
-fi
+alias jury_preview="python ~/projetos/espressif/network-scripts/jira/report.py -b | xclip -sel clip"
+jury() {
+ python network-scripts/jira/report.py -j "$1" | vim - 
+}
+
+stash() {
+  git stash push -m "name_$1"
+}
+
+stashapply() {
+  git stash apply $(git stash list | grep "name_$1" | cut -d: -f1)
+}
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+export EDITOR=/usr/bin/vim
