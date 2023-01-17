@@ -45,7 +45,15 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 
   local saga = require('lspsaga')
-  saga.init_lsp_saga()
+  saga.setup({
+      finder = {
+        edit = { 'o', '<CR>' },
+        vsplit = '<C-v>',
+        split = '<C-x>',
+        tabe = 't',
+        quit = { 'q', '<ESC>' },
+      },
+  })
   local command_center = require("command_center")
   local options = { noremap = true, silent = true }
   command_center.add({
