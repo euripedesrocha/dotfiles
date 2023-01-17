@@ -27,6 +27,7 @@ null_ls.setup {
       --   return utils.root_has_file("tools/format.sh")
       -- end
     }),
+    null_ls.builtins.diagnostics.actionlint,
   }
 }
 
