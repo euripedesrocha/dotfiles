@@ -1,5 +1,6 @@
+vim.g.barbar_auto_setup = false
 -- Set barbar's options
-require'bufferline'.setup {
+require'barbar'.setup {
   -- Enable/disable animations
   animation = true,
 
@@ -17,27 +18,13 @@ require'bufferline'.setup {
   --  - middle-click: delete buffer
   clickable = true,
 
-  -- Enables / disables diagnostic symbols
-  diagnostics = {
-    -- you can use a list
-    {enabled = true, icon = 'ﬀ'}, -- ERROR
-    {enabled = false}, -- WARN
-    {enabled = false}, -- INFO
-    {enabled = true},  -- HINT
-
-    -- OR `vim.diagnostic.severity`
-    [vim.diagnostic.severity.ERROR] = {enabled = true, icon = 'ﬀ'},
-    [vim.diagnostic.severity.WARN] = {enabled = false},
-    [vim.diagnostic.severity.INFO] = {enabled = false},
-    [vim.diagnostic.severity.HINT] = {enabled = true},
-  },
 
   -- Excludes buffers from the tabline
   -- exclude_ft = {'javascript'},
   -- exclude_name = {'package.json'},
 
   -- Hide inactive buffers and file extensions. Other options are `alternate`, `current`, and `visible`.
-  hide = {extensions = true, inactive = true},
+  -- hide = {extensions = true, inactive = true},
 
   -- Disable highlighting alternate buffers
   highlight_alternate = false,
@@ -48,20 +35,49 @@ require'bufferline'.setup {
   -- Enable/disable icons
   -- if set to 'numbers', will show buffer index in the tabline
   -- if set to 'both', will show buffer index and icons in the tabline
-  icons = true,
+  icons = {
+    -- Enables / disables diagnostic symbols
+    diagnostics = {
+      -- you can use a list
+      {enabled = true, icon = 'ﬀ'}, -- ERROR
+      {enabled = false}, -- WARN
+      {enabled = false}, -- INFO
+      {enabled = true},  -- HINT
+
+      -- OR `vim.diagnostic.severity`
+      [vim.diagnostic.severity.ERROR] = {enabled = true, icon = 'ﬀ'},
+      [vim.diagnostic.severity.WARN] = {enabled = false},
+      [vim.diagnostic.severity.INFO] = {enabled = false},
+      [vim.diagnostic.severity.HINT] = {enabled = true},
+    },
+    separator = {left = '▎', right = ''},
+
+    -- Configure the icons on the bufferline when modified or pinned.
+    -- Supports all the base icon options.
+    modified = {button = '●'},
+    pinned = {button = '車', filename = true, separator = {right = ''}},
+
+    -- Configure the icons on the bufferline based on the visibility of a buffer.
+    -- Supports all the base icon options, plus `modified` and `pinned`.
+    alternate = {filetype = {enabled = false}},
+    current = {buffer_index = true},
+    inactive = {button = '×'},
+    visible = {modified = {buffer_number = false}},
+
+  },
 
   -- If set, the icon color will follow its corresponding buffer
   -- highlight group. By default, the Buffer*Icon group is linked to the
   -- Buffer* group (see Highlighting below). Otherwise, it will take its
   -- default value as defined by devicons.
-  icon_custom_colors = false,
+  -- icon_custom_colors = false,
 
   -- Configure icons on the bufferline.
-  icon_separator_active = '▎',
-  icon_separator_inactive = '▎',
-  icon_close_tab = '',
-  icon_close_tab_modified = '●',
-  icon_pinned = '車',
+  -- icon_separator_active = '▎',
+  -- icon_separator_inactive = '▎',
+  -- icon_close_tab = '',
+  -- icon_close_tab_modified = '●',
+  -- icon_pinned = '車',
 
   -- If true, new buffers will be inserted at the start/end of the list.
   -- Default is to insert after current buffer.
@@ -128,10 +144,10 @@ map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts)
 -- Magic buffer-picking mode
 map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
 -- Sort automatically by...
-map('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
-map('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
-map('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
-map('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
+map('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
+map('n', '<leader>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
+map('n', '<leader>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
+map('n', '<leader>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 
 -- Other:
 -- :BarbarEnable - enables barbar (enabled by default)

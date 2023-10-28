@@ -110,9 +110,9 @@ end
 -- vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
 -- vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
 --
-local command_center = require("command_center")
+local commander = require("commander")
 local options = { noremap = true, silent = true }
-command_center.add({
+commander.add({
    {
     desc = "Vit",
     cmd = "<cmd>lua _floatvit_toggle()<cr>",
@@ -124,7 +124,6 @@ command_center.add({
   },
 }, {
   category = "Terminal",
-  command_center.mode.ADD_SET
 })
 
 function _G.set_terminal_keymaps()

@@ -24,11 +24,11 @@ require('gitsigns').setup {
     -- Text object
     map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
 
-    local command_center = require("command_center")
+    local commander = require("commander")
     local noremap = { noremap = true }
     -- local silent_noremap = { noremap = true, silent = true }
 
-    command_center.add({
+    commander.add({
       {
         desc = "Toggle Gitsigns",
         cmd = "<CMD>Gitsigns toggle_signs<CR>",
@@ -37,17 +37,25 @@ require('gitsigns').setup {
         desc = "Stage hunk",
         cmd = "<CMD>Gitsigns stage_hunk<CR>",
         keys = {
-          {"n", "<leader>hs", noremap },
-          {"v", "<leader>hs", noremap }
+          { "n", "<leader>hs", noremap },
+          { "v", "<leader>hs", noremap }
+        },
+    set = true,
+      }, {
+        desc = "Reset hunk",
+        cmd = "<CMD>Gitsigns reset_hunk<CR>",
+        keys = {
+          { "n", "<leader>hr", noremap },
+          { "v", "<leader>hr", noremap }
         }
       }, {
         desc = "Undo stage hunk",
         cmd = gs.undo_stage_hunk,
-        keys = {'n', "<leader>hu", noremap},
-      },{
+        keys = { 'n', "<leader>hu", noremap },
+      }, {
         desc = "Reset Buffer",
         cmd = gs.reset_buffer,
-        keys = {'n', "<leader>gR", noremap},
+        keys = { 'n', "<leader>gR", noremap },
       }, {
         desc = "Preview hunk",
         cmd = gs.preview_hunk,
@@ -60,15 +68,15 @@ require('gitsigns').setup {
         desc = "Git togle line blame",
         cmd = gs.toggle_current_line_blame,
         keys = { "n", "<leader>gtb", noremap },
-      },{
+      }, {
         desc = "Git Diff",
         cmd = gs.diffthis,
         keys = { "n", "<leader>gd", noremap },
-      },{
+      }, {
         desc = "Git diff last commit",
         cmd = function() gs.diffthis('~') end,
         keys = { "n", "<leader>gD", noremap },
-      },{
+      }, {
         desc = "Git togle deleted",
         cmd = gs.toggle_deleted,
         keys = { "n", "<leader>gtd", noremap },
@@ -81,34 +89,34 @@ require('gitsigns').setup {
         desc = "Next hunk",
         cmd = gs.next_hunk,
         keys = { "n", "]h", noremap },
-      },{
+      }, {
         desc = "Prev hunk",
         cmd = gs.prev_hunk,
         keys = { "n", "[h", noremap },
-      },{
+      }, {
         desc = "Git list of changes",
         cmd = gs.setqflist,
         keys = { "n", "<leader>gc", noremap },
+    set = true,
       },
     }, {
       category = "git",
-      command_center.mode.ADD_SET
     })
   end
 }
-local command_center = require("command_center")
+local commander = require("commander")
 local noremap = { noremap = true }
 -- local silent_noremap = { noremap = true, silent = true }
 
-command_center.add({
-{
-desc = "Fugitive",
-cmd = "<CMD>Git<CR>",
-keys = { "n", "<leader>g", noremap },
+commander.add({
+  {
+    desc = "Fugitive",
+    cmd = "<CMD>Git<CR>",
+    keys = { "n", "<leader>g", noremap },
+    set = true,
+  },
 },
-},
-{
-category = "git",
-command_center.mode.ADD_SET
-}
+  {
+    category = "git",
+  }
 )

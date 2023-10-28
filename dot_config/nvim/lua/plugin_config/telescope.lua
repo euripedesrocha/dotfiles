@@ -1,5 +1,4 @@
 local telescope = require("telescope")
-local command_center = require("command_center")
 local actions = require("telescope.actions")
 local noremap = { noremap = true }
 -- local silent_noremap = { noremap = true, silent = true }
@@ -14,29 +13,50 @@ telescope.setup {
     git_files = {
       recurse_submodules = true,
     }
-  },
-  extensions = {
-    command_center = {
-      components = {
-        command_center.component.DESC,
-        command_center.component.KEYS,
-        command_center.component.CATEGORY,
-      },
-      sort_by = {
-        command_center.component.KEYS,
-        command_center.component.DESC,
-        command_center.component.CATEGORY,
-      },
-      auto_replace_desc_with_cmd = true,
-    }
   }
 }
+require("commander").setup({
+  -- Specify what components are shown in the prompt;
+  -- Order matters, and components may repeat
+  components = {
+    "DESC",
+    "KEYS",
+    "CMD",
+    "CAT",
+  },
 
-telescope.load_extension('command_center')
-command_center.add({
+  -- Spcify by what components the commands is sorted
+  -- Order does not matter
+  sort_by = {
+    "DESC",
+    "KEYS",
+    "CMD",
+    "CAT",
+  },
+
+  -- Change the separator used to separate each component
+  separator = " ",
+
+  -- When set to true,
+  -- The desc component will be populated with cmd if desc is empty or missing.
+  auto_replace_desc_with_cmd = true,
+
+  -- Default title of the prompt
+  prompt_title = "Commander",
+
+  integration = {
+    telescope = {
+      -- Set to true to use telescope instead of vim.ui.select for the UI
+      enable = true,
+      -- Can be any builtin or custom telescope theme
+      theme = theme,
+    },
+  }
+})
+require("commander").add({
   {
-    desc = "Open command_center",
-    cmd = "<CMD>Telescope command_center<CR>",
+    desc = "Open commander",
+    cmd = "<CMD>Telescope commander<CR>",
     keys = {
       { "n", "<Leader>fc", noremap },
       { "v", "<Leader>fc", noremap },
@@ -46,12 +66,21 @@ command_center.add({
       { "n", "<Leader>f", noremap },
       { "v", "<Leader>f", noremap },
     },
+    set = true,
   }
-}, command_center.mode.SET)
-
+})
+-- Add a new command
+require("commander").add({
+  {
+    desc = "Open commander",
+    cmd = require("commander").show,
+    keys = { "n", "<Leader>fc" },
+  }
+})
+-- Show commander and select the command by pressing "<leader>fc"
 -- local builtin = require('telescope.builtin')
 
-command_center.add({
+require("commander").add({
   {
     desc = "Telescope",
     cmd = "<CMD>Telescope<CR>",
@@ -85,16 +114,19 @@ command_center.add({
     desc = "Live grep",
     cmd = "<CMD>Telescope live_grep<CR>",
     keys = { "n", "<leader>lg", noremap },
+    set = true,
 
   }, {
     desc = "Show diagnostics",
     cmd = "<CMD>Telescope diagnostics<CR>",
     keys = { "n", "<leader>td", noremap },
+    set = true,
 
   }, {
     desc = "Implementations",
     cmd = "<CMD>Telescope lsp_implementations<CR>",
     keys = { "n", "<leader>ti", noremap },
+    set = true,
 
   }
 
@@ -109,8 +141,6 @@ command_center.add({
   -- },
 }, {
   category = "telescope",
-  command_center.mode.ADD_SET
-
 }
 )
 

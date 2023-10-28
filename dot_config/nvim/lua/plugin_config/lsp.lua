@@ -2,7 +2,7 @@ require('mason').setup()
 local servers = {
   clangd = {},
   cmake = {},
-  sumneko_lua = {},
+  lua_ls = {},
   marksman = {},
   pyright = {},
   ruff_lsp = {},
@@ -22,7 +22,7 @@ null_ls.setup {
     null_ls.builtins.diagnostics.mypy,
     null_ls.builtins.diagnostics.proselint,
     null_ls.builtins.formatting.astyle.with({
-      extra_args = { "--project", vim.fn.expand("~/.espressif/.astylerc")},
+      extra_args = { "--project", vim.fn.expand("~/.espressif/.astylerc") },
       -- condition = function(utils)
       --   return utils.root_has_file("tools/format.sh")
       -- end
@@ -30,12 +30,12 @@ null_ls.setup {
     null_ls.builtins.diagnostics.actionlint,
   }
 }
-
-local on_attach = function(_, bufnr)
+local on_attach
+on_attach = function(_, bufnr)
   local lsp_formatting = function(buffer_number)
     vim.lsp.buf.format({
-      filter = function(client)
-        return client.name ~= "clangd"
+      filter = function(f_client)
+        return f_client.name ~= "clangd"
       end,
       bufnr = buffer_number,
     })
@@ -45,19 +45,40 @@ local on_attach = function(_, bufnr)
     lsp_formatting(bufnr)
   end, { desc = 'Format current buffer with LSP' })
 
-  local saga = require('lspsaga')
-  saga.setup({
-      finder = {
-        edit = { 'o', '<CR>' },
-        vsplit = '<C-v>',
-        split = '<C-x>',
+  require('lspsaga').setup({
+    finder = {
+      max_height = 0.5,
+      keys = {
+        shuttle = '[w',
+        toggle_or_open = 'o',
+        vsplit = 'v',
+        split = 's',
         tabe = 't',
+        tabnew = 'r',
         quit = { 'q', '<ESC>' },
+        close = '<C-c>k',
       },
+      methods = {
+        tyd = 'textDocument/typeDefinition'
+      }
+    },
+    definition = {
+      edit = "o",
+      vsplit = "v",
+      split = "s",
+      tabe = "t",
+      quit = "q",
+    },
+    code_action = {
+      extend_gitsigns = false,
+    },
+    symbol_in_winbar = {
+      enable = false
+    },
   })
-  local command_center = require("command_center")
+  local commander = require("commander")
   local options = { noremap = true, silent = true }
-  command_center.add({
+  commander.add({
     {
       desc = "Code Action",
       cmd = "<cmd>Lspsaga code_action<CR>",
@@ -71,20 +92,20 @@ local on_attach = function(_, bufnr)
       cmd = "<cmd>Lspsaga show_line_diagnostics<CR>",
       keys = { "n", "<leader>sd", options },
     }, {
-      desc = "Definition File",
+      desc = "Peek definition",
       cmd = "<cmd>Lspsaga peek_definition<CR>",
-      keys = { "n", "<leader>gd", options },
+      keys = { "n", "gd", options },
     }, {
       desc = "Show Outline",
       cmd = "<cmd>Lspsaga outline<CR>",
-      keys = { "n", "<leader>sd", options },
+      keys = { "n", "<leader>so", options },
     }, {
       desc = "Format",
       cmd = "<cmd>Format<CR>",
       keys = { "n", "<leader>af", options },
     }, {
       desc = "LSP Finder",
-      cmd = "<cmd>Lspsaga lsp_finder<CR>",
+      cmd = "<cmd>Lspsaga finder tyd+ref+imp+def<CR>",
       keys = { "n", "gh", options },
     }, {
       desc = "Next diagnostic",
@@ -120,11 +141,14 @@ local on_attach = function(_, bufnr)
     --   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   }, {
     category = "LSP",
-    command_center.mode.ADD_SET
   }
   )
+
 end
---
+
+require('clangd_extensions').setup {
+  server = { on_attach = on_attach },
+}
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -147,37 +171,7 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
----- Turn on lsp status information
-require('fidget').setup()
-require('trouble').setup()
 
-local command_center = require("command_center")
-local options = { noremap = true, silent = true }
-command_center.add({
-  {
-    desc = "Trouble",
-    cmd = "<cmd>TroubleToggle<CR>",
-    keys = { "n", "<leader>xx", options },
-  }, {
-    desc = "Quickfix",
-    cmd = "<cmd>TroubleToggle quickfix<CR>",
-    keys = { "n", "<leader>xf", options },
-  }, {
-    desc = "Trouble Workspace diagnostics",
-    cmd = "<cmd>TroubleToggle workspace_diagnostics<CR>",
-    keys = { "n", "<leader>xw", options },
-  }, {
-    desc = "Trouble document diagnostics",
-    cmd = "<cmd>TroubleToggle document_diagnostics<CR>",
-    keys = { "n", "<leader>xd", options },
-  },
-}, {
-  category = "LSP",
-  command_center.mode.ADD_SET
-})
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
-  { silent = true, noremap = true }
-)
 --
 -- " Highlight the symbol and its references when holding the cursor.
 -- autocmd CursorHold * silent call CocActionAsync('highlight')

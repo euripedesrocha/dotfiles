@@ -141,10 +141,10 @@ require('telekasten').setup({
     -- A customizable fallback handler for urls.
     follow_url_fallback = nil,
 })
-local command_center = require("command_center")
+local commander = require("commander")
 local options = { noremap = true, silent = true }
 local telekasten = require('telekasten')
-command_center.add({
+commander.add({
   {
     desc = "Telekasten panel",
     cmd = telekasten.panel,
@@ -180,7 +180,6 @@ command_center.add({
   },
 }, {
   category = "Zettelkasten",
-  command_center.mode.ADD_SET
 })
 -- nnoremap <leader>zf :lua require('telekasten').find_notes()<CR>
 -- nnoremap <leader>zg :lua require('telekasten').search_notes()<CR>

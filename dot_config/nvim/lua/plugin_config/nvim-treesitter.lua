@@ -1,7 +1,6 @@
-
 require('nvim-treesitter.configs').setup {
  -- Add languages to be installed here that you want installed for treesitter
- ensure_installed = { 'c', 'cpp', 'lua', 'python', 'help', 'yaml' },
+ ensure_installed = { 'c', 'cpp', 'cmake', 'gitcommit', 'lua', 'python', 'yaml', 'markdown', 'markdown_inline', 'haskell' },
 
  highlight = { enable = true },
  indent = { enable = true, disable = { 'python' } },
@@ -58,9 +57,14 @@ require('nvim-treesitter.configs').setup {
      },
    },
  },
+ matchup = {
+   enable = true,              -- mandatory, false will disable the whole extension
+   -- disable = { "c", "ruby" },  -- optional, list of language that will be disabled
+   -- [options]
+ },
 }
 
-
+-- require'nvim-treesitter.configs'.setup 
 vim.opt.foldlevel = 2
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"

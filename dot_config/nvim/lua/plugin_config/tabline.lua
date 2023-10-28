@@ -18,9 +18,9 @@ tabline.setup {
   }
 }
 
-local command_center = require("command_center")
+local commander = require("commander")
 local options = { noremap = true, silent = true }
-command_center.add({
+commander.add({
   {
     desc = "Create a new tab",
     cmd = "<cmd>TablineTabNew<CR>",
@@ -41,7 +41,6 @@ command_center.add({
 
 }, {
     category = "Tabs",
-    command_center.mode.ADD_SET
   }
 )
 

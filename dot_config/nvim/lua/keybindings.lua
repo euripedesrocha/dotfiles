@@ -1,6 +1,6 @@
-local command_center = require("command_center")
+local commander = require("commander")
 local noremap = { noremap = true }
-command_center.add({
+commander.add({
   {
     desc = "Save",
     cmd = '<CMD>w<CR>',
