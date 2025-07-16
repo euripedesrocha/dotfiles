@@ -123,10 +123,22 @@ LS_COLORS="ow=01;36;40" && export LS_COLORS
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 autoload -Uz compinit
 compinit
-export PATH="$PATH:/opt/cmake/bin:/home/euripedes/.local/bin:/opt/ghdl/bin"
+export PATH="$PATH:/opt/cmake/bin:/home/euripedes/.local/bin:/opt/ghdl/bin:~/.cargo/bin/"
 #alias tmux="TERM=screen-256color-bce tmux"
 
 alias jury_preview="python ~/projetos/espressif/network-scripts/jira/report.py -b | xclip -sel clip"
+
+# alias forecast="hledger bal assets -HM not:equity:opening --forecast -b thismonth -e 11months"
+forecast() {
+  hledger bal assets -HM not:equity:opening not:assets:transfer --forecast -b thismonth -e $1months
+}
+
+#alias budget="hledger bal expenses -M -b lastmonth -e nextmonth --budget"
+budget() {
+  hledger bal expenses -M -b -$1months -e nextmonth --budget
+}
+
+alias expenses="hledger bal expenses -M -b lastmonth -e nextmonth"
 jury() {
  python network-scripts/jira/report.py -j "$1" | vim - 
 }
@@ -138,8 +150,9 @@ stash() {
 stashapply() {
   git stash apply $(git stash list | grep "name_$1" | cut -d: -f1)
 }
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
 
+export LEDGER_FILE="$HOME/hledger/all.journal"
 . ~/.compote-complete.zsh
+
+# opam configuration
+[[ ! -r /home/euripedes/.opam/opam-init/init.zsh ]] || source /home/euripedes/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null

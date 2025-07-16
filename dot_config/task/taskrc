@@ -31,8 +31,58 @@ include solarized-dark-256.theme
 #include solarized-light-256.theme
 #include no-color.theme
 
-news.version=2.6.0
+news.version=3.1.0
 context.work.read=project:espressif
 context.work.write=project:espressif
-context.personal.read=project:personal
-context.personal.write=project:personal
+context.personal.read=project.not:espressif
+context.personal.write=project.not:espressif
+context.focus.read=+focus
+context.focus.write=+focus
+
+report.inbox.description=INBOX report
+report.inbox.filter=limit:page dep: status:pending and prio:
+report.inbox.columns=id,project,description,entry.age,urgency,tags
+report.inbox.labels=ID,Project,Description,Age,Urg,Tags
+report.inbox.sort=project+/,urgency-
+
+report.today.description=Tasks for the day
+report.today.filter=limit:page status:pending and prio:H and tag:today
+report.today.columns=start.active,id,project,description,entry.age,urgency,tags
+report.today.labels=A,ID,Proj,Description,Age,Urg,Tags
+report.today.sort=project+/,urgency-
+
+report.thisweek.description=Tasks completed this week
+report.thisweek.filter=limit:page end.after:sow status:completed
+report.thisweek.columns=project,description,entry.age
+report.thisweek.labels=Proj,Description,Age
+report.thisweek.sort=project+/,urgency-
+
+report.todo.description=High priority tasks
+report.todo.filter=limit:page status:pending and prio:H
+report.todo.columns=start.active,id,project,description,entry.age,urgency,tags
+report.todo.labels=A,ID,Proj,Description,Age,Urg,Tags
+report.todo.sort=urgency-
+
+report.backlog.description=Low priority tasks
+report.backlog.filter=limit:page status:pending and prio:L
+report.backlog.columns=id,project,description,entry.age,urgency,tags
+report.backlog.labels=ID,Proj,Description,Age,Urg,Tags
+report.backlog.sort=project+/,urgency-
+
+report.waiting.description=Waiting tasks
+report.waiting.filter=limit:page status:waiting
+report.waiting.columns=id,project,description,wait,entry.age,urgency,tags
+report.waiting.labels=ID,Proj,Description,Wait,Age,Urg,Tags
+report.waiting.sort=wait+,project+/,urgency-
+
+context.demo.read=project:espressif.demo
+context.demo.write=project:espressif.demo
+context.mqtt_managed.read=project:espressif.components.mqtt.managed_component
+context.mqtt_managed.write=project:espressif.components.mqtt.managed_component
+context.brasilsummit_demo.read=project:espressif.brasilsummit.demo
+context.brasilsummit_demo.write=project:espressif.brasilsummit.demo
+context.brasilsummit_presentation.read=project:espressif.brasilsummit.presentation
+context.brasilsummit_presentation.write=project:espressif.brasilsummit.presentation
+context.brasilsummit_workshop.read=project:espressif.brasilsummit.workshop
+context.brasilsummit_workshop.write=project:espressif.brasilsummit.workshop
+context=work
